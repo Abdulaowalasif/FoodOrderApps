@@ -13,6 +13,7 @@ public class OrderListDTO {
     private Long id;
     private String restaurantId;
     private Long menuId;
+    private String image;
     private int quantity;
     private Double totalAmount;
 }

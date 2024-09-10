@@ -39,7 +39,6 @@ public class MenuListController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Handle invalid input
         } catch (Exception e) {
-            e.printStackTrace(); // Log detailed error
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

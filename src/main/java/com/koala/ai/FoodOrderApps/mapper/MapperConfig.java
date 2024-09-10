@@ -69,6 +69,7 @@ public class MapperConfig {
         OrderList orderList = new OrderList();
         orderList.setId(dto.getId());
         orderList.setQuantity(dto.getQuantity());
+        orderList.setImage(dto.getImage());
         orderList.setTotalAmount(dto.getTotalAmount());
 
         if (dto.getRestaurantId() != null) {
@@ -90,6 +91,7 @@ public class MapperConfig {
         OrderListDTO dto = new OrderListDTO();
         dto.setId(orderList.getId());
         dto.setQuantity(orderList.getQuantity());
+        dto.setImage(orderList.getImage());
         dto.setTotalAmount(orderList.getTotalAmount());
         dto.setRestaurantId(orderList.getRestaurant() != null ? orderList.getRestaurant().getId() : null);
         dto.setMenuId(orderList.getMenuList() != null ? orderList.getMenuList().getId() : null);

@@ -1,4 +1,5 @@
 package com.koala.ai.FoodOrderApps.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class OrderList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id", nullable = false)
     private MenuList menuList;
+
+    @Column(name = "image") // Add this field to store image URL or path
+    private String image;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
