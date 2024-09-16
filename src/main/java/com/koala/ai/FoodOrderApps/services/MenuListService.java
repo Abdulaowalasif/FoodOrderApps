@@ -46,4 +46,8 @@ public class MenuListService {
         return menuListRepository.findByRestaurantId(restaurantId);
     }
 
+    public List<MenuList> searchMenuByName(String name) {
+        return menuListRepository.findByNameContainingIgnoreCase(name);
+    }
+
 }

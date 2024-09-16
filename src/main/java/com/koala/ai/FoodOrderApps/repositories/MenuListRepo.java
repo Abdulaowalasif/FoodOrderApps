@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface MenuListRepo extends JpaRepository<MenuList,Long> {
     List<MenuList> findByRestaurantId(String restaurantId);
+    List<MenuList> findByNameContainingIgnoreCase(String name);
 }

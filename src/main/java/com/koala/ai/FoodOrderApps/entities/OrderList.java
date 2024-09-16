@@ -29,6 +29,12 @@ public class OrderList {
     @Column(name = "image") // Add this field to store image URL or path
     private String image;
 
+    @Column(name = "username") // Add this field to store image URL or path
+    private String username;
+
+    @Column(name = "location") // Add this field to store image URL or path
+    private String location;
+
     @Column(name = "quantity", nullable = false)
     private int quantity;
 

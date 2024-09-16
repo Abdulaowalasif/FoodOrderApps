@@ -78,4 +78,15 @@ public class MenuListController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(menuListDTOs, HttpStatus.OK);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<MenuListDTO>> searchMenuByName(@RequestParam("name") String name) {
+        List<MenuList> menuLists = service.searchMenuByName(name);
+        if (menuLists.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<MenuListDTO> menuListDTOs = menuLists.stream()
+                .map(mapperConfig::toMenuListDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(menuListDTOs, HttpStatus.OK);
+    }
 }

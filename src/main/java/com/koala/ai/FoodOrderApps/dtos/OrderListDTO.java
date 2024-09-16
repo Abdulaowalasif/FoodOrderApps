@@ -15,5 +15,7 @@ public class OrderListDTO {
     private Long menuId;
     private String image;
     private int quantity;
+    private String location;
+    private String username;
     private Double totalAmount;
 }
