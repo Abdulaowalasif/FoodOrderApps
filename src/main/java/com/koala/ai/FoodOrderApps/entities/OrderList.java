@@ -26,13 +26,22 @@ public class OrderList {
     @JoinColumn(name = "menu_id", nullable = false)
     private MenuList menuList;
 
-    @Column(name = "image") // Add this field to store image URL or path
+    @Column(name = "image")
     private String image;
 
-    @Column(name = "username") // Add this field to store image URL or path
+    @Column(name = "itemName")
+    private String itemName;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "location") // Add this field to store image URL or path
+    @Column(name = "location")
     private String location;
 
     @Column(name = "quantity", nullable = false)

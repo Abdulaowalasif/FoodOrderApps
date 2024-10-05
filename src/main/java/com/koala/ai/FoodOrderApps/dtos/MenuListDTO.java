@@ -12,6 +12,7 @@ import lombok.Setter;
 public class MenuListDTO {
     private Long id; // Include if needed
     private String name;
+    private String description;
     private Double price;
     private String image; // Add image field
     private String restaurantId; // Add restaurantId if needed

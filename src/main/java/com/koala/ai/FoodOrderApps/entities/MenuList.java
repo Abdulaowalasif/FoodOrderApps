@@ -1,7 +1,6 @@
 package com.koala.ai.FoodOrderApps.entities;
 
-import com.koala.ai.FoodOrderApps.entities.OrderList;
-import com.koala.ai.FoodOrderApps.entities.Restaurant;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +25,10 @@ public class MenuList {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "image") // Add this field to store image URL or path
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "image")
     private String image;
 
     @Column(name = "price", nullable = false)
@@ -39,5 +41,7 @@ public class MenuList {
     @OneToMany(mappedBy = "menuList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderList> orderLists = new ArrayList<>();
 
+    @OneToMany(mappedBy = "menuList", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cart> cart = new ArrayList<>();
 
 }

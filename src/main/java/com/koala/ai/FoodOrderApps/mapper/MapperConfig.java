@@ -1,14 +1,17 @@
 package com.koala.ai.FoodOrderApps.mapper;
 
 
+import com.koala.ai.FoodOrderApps.dtos.CartDto;
 import com.koala.ai.FoodOrderApps.dtos.MenuListDTO;
 import com.koala.ai.FoodOrderApps.dtos.OrderListDTO;
 import com.koala.ai.FoodOrderApps.dtos.RestaurantDTO;
+import com.koala.ai.FoodOrderApps.entities.Cart;
 import com.koala.ai.FoodOrderApps.entities.Restaurant;
 import com.koala.ai.FoodOrderApps.entities.MenuList;
 import com.koala.ai.FoodOrderApps.entities.OrderList;
 import com.koala.ai.FoodOrderApps.services.MenuListService;
 import com.koala.ai.FoodOrderApps.services.RestaurantService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,8 @@ public class MapperConfig {
         menuList.setId(dto.getId());
         menuList.setName(dto.getName());
         menuList.setPrice(dto.getPrice());
+        menuList.setPrice(dto.getPrice());
+        menuList.setDescription(dto.getDescription());
         menuList.setImage(dto.getImage()); // Map image field
         if (dto.getRestaurantId() != null) {
             Restaurant restaurant = restaurantService.getRestaurantById(dto.getRestaurantId())
@@ -42,6 +47,7 @@ public class MapperConfig {
         MenuListDTO dto = new MenuListDTO();
         dto.setId(menuList.getId());
         dto.setName(menuList.getName());
+        dto.setDescription(menuList.getDescription());
         dto.setPrice(menuList.getPrice());
         dto.setImage(menuList.getImage()); // Map image field
         dto.setRestaurantId(menuList.getRestaurant() != null ? menuList.getRestaurant().getId() : null);
@@ -64,7 +70,6 @@ public class MapperConfig {
         return dto;
     }
 
-
     public OrderList toOrderList(OrderListDTO dto) {
         OrderList orderList = new OrderList();
         orderList.setId(dto.getId());
@@ -72,6 +77,9 @@ public class MapperConfig {
         orderList.setImage(dto.getImage());
         orderList.setLocation(dto.getLocation());
         orderList.setUsername(dto.getUsername());
+        orderList.setPhone(dto.getPhone());
+        orderList.setItemName(dto.getItemName());
+        orderList.setDescription(dto.getDescription());
         orderList.setTotalAmount(dto.getTotalAmount());
 
         if (dto.getRestaurantId() != null) {
@@ -94,11 +102,35 @@ public class MapperConfig {
         dto.setId(orderList.getId());
         dto.setQuantity(orderList.getQuantity());
         dto.setImage(orderList.getImage());
-        orderList.setLocation(dto.getLocation());
-        orderList.setUsername(dto.getUsername());
+        dto.setLocation(orderList.getLocation());
+        dto.setUsername(orderList.getUsername());
+        dto.setItemName(orderList.getItemName());
+        dto.setPhone(orderList.getPhone());
+        dto.setDescription(orderList.getDescription());
         dto.setTotalAmount(orderList.getTotalAmount());
         dto.setRestaurantId(orderList.getRestaurant() != null ? orderList.getRestaurant().getId() : null);
         dto.setMenuId(orderList.getMenuList() != null ? orderList.getMenuList().getId() : null);
         return dto;
+    }
+
+    public CartDto toCartDto(Cart cart) {
+        CartDto dto = new CartDto();
+        dto.setId(cart.getId());
+        dto.setQuantity(cart.getQuantity());
+        dto.setUserId(cart.getUserId());
+        dto.setMenuListId(cart.getMenuList().getId());
+        return dto;
+    }
+
+    public Cart toCart(CartDto dto) {
+        Cart cart = new Cart();
+        cart.setId(dto.getId());
+        cart.setUserId(dto.getUserId());
+        cart.setQuantity(dto.getQuantity());
+
+        MenuList menuList = menuListService.getMenuById(dto.getMenuListId())
+                .orElseThrow(() -> new EntityNotFoundException("MenuList not found with ID: " + dto.getMenuListId()));
+        cart.setMenuList(menuList);
+        return cart;
     }
 }

@@ -1,7 +1,5 @@
 package com.koala.ai.FoodOrderApps.entities;
 
-import com.koala.ai.FoodOrderApps.entities.MenuList;
-import com.koala.ai.FoodOrderApps.entities.OrderList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +23,7 @@ public class Restaurant {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "image") // Add this field to store image URL or path
+    @Column(name = "image")
     private String image;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)

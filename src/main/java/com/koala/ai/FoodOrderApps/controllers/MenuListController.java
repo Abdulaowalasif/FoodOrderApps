@@ -5,13 +5,16 @@ import com.koala.ai.FoodOrderApps.entities.MenuList;
 import com.koala.ai.FoodOrderApps.exceptions.MenuNotFoundException;
 import com.koala.ai.FoodOrderApps.mapper.MapperConfig;
 import com.koala.ai.FoodOrderApps.services.MenuListService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/menus")
 public class MenuListController {
@@ -44,7 +47,6 @@ public class MenuListController {
     }
 
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable("id") Long menuId) {
         try {
@@ -52,6 +54,21 @@ public class MenuListController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (MenuNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MenuListDTO> getMenuById(@PathVariable("id") Long menuId) {
+        try {
+            Optional<MenuList> menuListOpt = service.getMenuById(menuId);
+            if (menuListOpt.isPresent()) {
+                MenuListDTO menuListDTO = mapperConfig.toMenuListDTO(menuListOpt.get());
+                return new ResponseEntity<>(menuListDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -78,6 +95,7 @@ public class MenuListController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(menuListDTOs, HttpStatus.OK);
     }
+
     @GetMapping("/search")
     public ResponseEntity<List<MenuListDTO>> searchMenuByName(@RequestParam("name") String name) {
         List<MenuList> menuLists = service.searchMenuByName(name);
@@ -89,4 +107,5 @@ public class MenuListController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(menuListDTOs, HttpStatus.OK);
     }
+
 }
